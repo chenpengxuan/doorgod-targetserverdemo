@@ -1,0 +1,74 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.0.RELEASE'
+	}
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url "http://172.16.100.98/nexus/content/groups/public/"}
+		maven { url "http://repo.spring.io/release" }
+		maven { url "http://repo.spring.io/milestone" }
+		maven { url "http://repo.spring.io/snapshot" }
+	}
+	dependencies {
+		//classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+jar {
+	baseName = 'doorgod-targetserverdemo'
+	version = '1.0.0'
+	exclude('logback.xml')
+	exclude{ it.name.endsWith('.properties');}
+}
+compileJava {
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+	options.encoding = 'UTF-8'
+
+}
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven { url "http://172.16.100.98/nexus/content/groups/public/"}
+	maven { url "http://repo.spring.io/release" }
+	maven { url "http://repo.spring.io/milestone" }
+	maven { url "http://repo.spring.io/snapshot" }
+}
+
+
+dependencies {
+	compile 'io.vertx:vertx-core:3.3.3'
+}
+
+configurations {
+	compile.exclude module: 'slf4j-log4j12'
+}
+
+//复制启动，停止脚本
+task copyScript(type: Copy) {
+	into "$buildDir/dist"
+	from "$projectDir/script"
+}
+
+//复制jar
+task copyJars(type: Copy,dependsOn:jar) {
+	from configurations.runtime  //项目所有的jar依赖
+	from "$buildDir/libs"        //本项目jar
+	into "$buildDir/dist/lib"
+}
+
+//复制配置
+task copyConfig(type: Copy){
+	from "$projectDir/src/main/resources/"
+	into "$buildDir/dist/conf"
+}
+
+//打包发布 发布为：gradle release 默认位置为：build/distributions
+task release(type: Zip,dependsOn:[clean,copyScript,copyJars,copyConfig]) {
+	archiveName="doorgod-targetserverdemo.zip"
+	from "$buildDir/dist"
+}
