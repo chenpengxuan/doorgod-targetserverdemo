@@ -13,10 +13,6 @@ public class TargetServerDemoApplication {
 
     public static void main(String[] args ) {
 
-        //指示vertx使用logback记日志
-        System.setProperty("vertx.logger-delegate-factory-class-name",
-                io.vertx.core.logging.SLF4JLogDelegateFactory.class.getName());
-
         //当前无需更多配置
         VertxOptions vertxOptions = new VertxOptions();
         Vertx vertx = Vertx.vertx(vertxOptions);
