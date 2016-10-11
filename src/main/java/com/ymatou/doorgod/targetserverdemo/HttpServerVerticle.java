@@ -39,55 +39,55 @@ public class HttpServerVerticle extends AbstractVerticle {
                         executor.submit(new HttpReqProcessor(request, 0, 0));
                         break;
                     case "0ms1k":
-                        executor.submit(new HttpReqProcessor(request, 0, 512));
+                        executor.submit(new HttpReqProcessor(request, 0, 1024));
                         break;
                     case "10ms0k":
                         executor.submit(new HttpReqProcessor(request, 10, 0));
                         break;
                     case "10ms1k":
-                        executor.submit(new HttpReqProcessor(request, 10, 512));
+                        executor.submit(new HttpReqProcessor(request, 10, 1024));
                         break;
                     case "50ms0k":
                         executor.submit(new HttpReqProcessor(request, 50, 0));
                         break;
                     case "50ms1k":
-                        executor.submit(new HttpReqProcessor(request, 50, 512));
+                        executor.submit(new HttpReqProcessor(request, 50, 1024));
                         break;
                     case "100ms0k":
                         executor.submit(new HttpReqProcessor(request, 100, 0));
                         break;
                     case "100ms1k":
-                        executor.submit(new HttpReqProcessor(request, 100, 512));
+                        executor.submit(new HttpReqProcessor(request, 100, 1024));
                         break;
                     case "200ms0k":
                         executor.submit(new HttpReqProcessor(request, 200, 0));
                         break;
                     case "200ms1k":
-                        executor.submit(new HttpReqProcessor(request, 200, 512));
+                        executor.submit(new HttpReqProcessor(request, 200, 1024));
                         break;
                     case "500ms0k":
                         executor.submit(new HttpReqProcessor(request, 500, 0));
                         break;
                     case "500ms1k":
-                        executor.submit(new HttpReqProcessor(request, 500, 512));
+                        executor.submit(new HttpReqProcessor(request, 500, 1024));
                         break;
                     case "1000ms0k":
                         executor.submit(new HttpReqProcessor(request, 1000, 0));
                         break;
                     case "1000ms1k":
-                        executor.submit(new HttpReqProcessor(request, 1000, 512));
+                        executor.submit(new HttpReqProcessor(request, 1000, 1024));
                         break;
                     case "2000ms0k":
                         executor.submit(new HttpReqProcessor(request, 2000, 0));
                         break;
                     case "2000ms1k":
-                        executor.submit(new HttpReqProcessor(request, 2000, 512));
+                        executor.submit(new HttpReqProcessor(request, 2000, 1024));
                         break;
                     case "10000ms0k":
                         executor.submit(new HttpReqProcessor(request, 10000, 0));
                         break;
                     case "10000ms1k":
-                        executor.submit(new HttpReqProcessor(request, 10000, 512));
+                        executor.submit(new HttpReqProcessor(request, 10000, 1024));
                         break;
                     default:
                         request.response().setStatusCode(500);
