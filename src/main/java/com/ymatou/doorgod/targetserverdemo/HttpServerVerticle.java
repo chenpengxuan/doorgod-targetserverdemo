@@ -50,7 +50,7 @@ public class HttpServerVerticle extends AbstractVerticle {
                     case "50ms0k":
                         executor.submit(new HttpReqProcessor(request, 50, 0));
                         break;
-                    case "50ms10k":
+                    case "50ms1k":
                         executor.submit(new HttpReqProcessor(request, 50, 512));
                         break;
                     case "100ms0k":
@@ -76,6 +76,12 @@ public class HttpServerVerticle extends AbstractVerticle {
                         break;
                     case "1000ms1k":
                         executor.submit(new HttpReqProcessor(request, 1000, 512));
+                        break;
+                    case "2000ms0k":
+                        executor.submit(new HttpReqProcessor(request, 2000, 0));
+                        break;
+                    case "2000ms1k":
+                        executor.submit(new HttpReqProcessor(request, 2000, 512));
                         break;
                     case "10000ms0k":
                         executor.submit(new HttpReqProcessor(request, 10000, 0));
