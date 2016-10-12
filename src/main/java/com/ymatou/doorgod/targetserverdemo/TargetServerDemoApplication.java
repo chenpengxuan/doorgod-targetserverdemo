@@ -40,8 +40,6 @@ public class TargetServerDemoApplication {
         if (throwables[0] != null) {
             throw new RuntimeException("Failed to startup TargetServerDemoApplication", throwables[0]);
         }
-
-        System.out.println( "Target server demo startup..." );
     }
 
 }

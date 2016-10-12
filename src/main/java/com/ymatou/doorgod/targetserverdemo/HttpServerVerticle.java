@@ -164,7 +164,8 @@ public class HttpServerVerticle extends AbstractVerticle {
         req.response().setChunked(true);
         req.response().setStatusCode(200);
         req.response().headers().set("Content-Type", "text/plain");
-        req.response().end("ok:" + getBody(bodySize));
+        req.response().write("ok:" + getBody(bodySize));
+        req.response().end();
     }
 
     private String getBody( int bodySize ) {
