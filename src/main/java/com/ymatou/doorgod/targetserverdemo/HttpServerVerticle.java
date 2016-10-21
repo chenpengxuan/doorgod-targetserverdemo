@@ -25,6 +25,10 @@ public class HttpServerVerticle extends AbstractVerticle {
 
     public static String BODY_10K;
 
+    private Properties props = new Properties();
+
+    private boolean chunkedMode;
+
     static {
         char[] chars = new char[SIZE_1K];
         Arrays.fill(chars, 'a');
@@ -89,6 +93,7 @@ public class HttpServerVerticle extends AbstractVerticle {
                         break;
                     case "100ms10k":
                         endResponse(request, 100, SIZE_10K);
+                        break;
                     case "200ms0k":
                         endResponse(request, 200, 0);
                         break;
@@ -134,6 +139,13 @@ public class HttpServerVerticle extends AbstractVerticle {
                     case "10000ms10k":
                         endResponse(request, 10000, SIZE_10K);
                         break;
+                    case "unchunked":
+                        request.response().end("ok");
+                        break;
+                    case "chunked":
+                        request.response().setChunked(true);
+                        request.response().end("ok");
+                        break;
                     default:
                         request.response().setStatusCode(404);
                         request.response().end("Unknown uri:" + request.path());
@@ -144,8 +156,8 @@ public class HttpServerVerticle extends AbstractVerticle {
             }
         });
 
-        Properties props = new Properties();
         props.load(HttpServerVerticle.class.getResourceAsStream("/app.properties"));
+        chunkedMode = Boolean.valueOf(props.getProperty("chunkedMode"));
         server.listen(Integer.valueOf(props.getProperty("vertxServerPort")));
     }
 
@@ -161,11 +173,10 @@ public class HttpServerVerticle extends AbstractVerticle {
     }
 
     private void buidResponse( HttpServerRequest req, int bodySize) {
-        req.response().setChunked(true);
-        req.response().setStatusCode(200);
-        req.response().headers().set("Content-Type", "text/plain");
-        req.response().write("ok:" + getBody(bodySize));
-        req.response().end();
+        if ( chunkedMode ) {
+            req.response().setChunked(true);
+        }
+        req.response().end("ok:" + getBody(bodySize));
     }
 
     private String getBody( int bodySize ) {
